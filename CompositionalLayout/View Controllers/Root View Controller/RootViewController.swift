@@ -42,10 +42,25 @@ class RootViewController: UIViewController {
         // Item
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
+                widthDimension: .fractionalWidth(2/3),
                 heightDimension: .fractionalHeight(1)
             )
         )
+        
+        let verticalItemStack = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(0.5)
+            )
+        )
+        
+        let verticalItemGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1/3),
+                heightDimension: .fractionalHeight(1)
+            ),
+            subitem: verticalItemStack,
+            count: 2)
 
         // Group
         let group = NSCollectionLayoutGroup.horizontal(
@@ -53,9 +68,10 @@ class RootViewController: UIViewController {
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .fractionalHeight(2/5)
             ),
-            subitem: item,
-            count: 2
-        )
+            subitems: [
+                item,
+                verticalItemGroup
+            ])
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
@@ -64,7 +80,7 @@ class RootViewController: UIViewController {
     }
 }
 
-extension RootViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension RootViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 30
     }
